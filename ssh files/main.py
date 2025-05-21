@@ -1,13 +1,13 @@
-import torch, trl, huggingface_hub
+import torch, huggingface_hub
 from datasets import load_dataset
 from trl import DPOConfig, DPOTrainer
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, BitsAndBytesConfig
-from peft import LoraConfig, TaskType, get_peft_model
+from peft import LoraConfig, TaskType
 
 hf_key = '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'
 huggingface_hub.login(hf_key)
 
-model_id = 'meta-llama/Llama-2-7b-hf'
+model_id = 'meta-llama/Llama-2-7b-chat-hf' # Se modifica en función del modelo que se quiera implementar
 dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.cuda.empty_cache()
 
@@ -46,4 +46,4 @@ beam_search = load_dataset('Kurosawama/beam_search_DPO', split = 'train')
 training_args = DPOConfig(output_dir = 'media/discoexterno/francisco', logging_steps = 20)
 trainer = DPOTrainer(model = model, args = training_args, processing_class = tokenizer, train_dataset = beam_search)
 trainer.train()
-model.push_to_hub('Llama-2-7b-DPO-beamsearch-align')
+model.push_to_hub('Llama-2-7b-chat-DPO-beamsearch-align')
