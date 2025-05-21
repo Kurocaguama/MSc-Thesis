@@ -12,7 +12,7 @@ generation_config = GenerationConfig.from_pretrained(model_id)
 
 # Declaración de modelo y tokenizador
 tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(model_id, device_map = '/media/discoexterno/francisco', generation_config = generation_config)
+model = AutoModelForCausalLM.from_pretrained(model_id, cache_dir = '/media/discoexterno/francisco/modelos', generation_config = generation_config)
 model.generation_config.pad_token_id = tokenizer.pad_token_id
 tokenizer.pad_token = tokenizer.eos_token
 
