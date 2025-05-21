@@ -15,6 +15,15 @@ generation_config = GenerationConfig.from_pretrained(model_id)
 
 # Declaración de modelo y tokenizador
 tokenizer = AutoTokenizer.from_pretrained(model_id)
+tokenizer.chat_template = """
+    <|im_start|>system
+    {SYSTEM}<|im_end|>
+    <|im_start|>user
+    {INPUT}<|im_ed|>
+    <|im_start|>assistant
+    {OUTPUT}<|im_end|>
+"""
+
 model = AutoModelForCausalLM.from_pretrained(model_id, cache_dir = '/media/discoexterno/francisco/modelos', quantization_config = quant_config, generation_config = generation_config).to(dev)
 model.generation_config.pad_token_id = tokenizer.pad_token_id
 tokenizer.pad_token = tokenizer.eos_token
