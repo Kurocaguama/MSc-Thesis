@@ -6,8 +6,9 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 hf_key = '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'
 huggingface_hub.login(hf_key)
 
-model_id = 'meta-llama/Llama-3.2-1B-Instruct'
+model_id = 'meta-llama/Llama-2-7b'
 dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+torch.cuda.empty_cache()
 
 generation_config = GenerationConfig.from_pretrained(model_id)
 
@@ -24,4 +25,4 @@ beam_search = load_dataset('Kurosawama/beam_search_DPO', split = 'train')
 training_args = DPOConfig(output_dir = 'media/discoexterno/francisco', logging_steps = 20)
 trainer = DPOTrainer(model = model, args = training_args, processing_class = tokenizer, train_dataset = beam_search)
 trainer.train()
-model.push_to_hub('Llama-3.2-1B-Instruct-DPO-beamsearch-align')
+model.push_to_hub('Llama-2-7b-DPO-beamsearch-align')
