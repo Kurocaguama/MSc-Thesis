@@ -2,6 +2,7 @@ import torch, trl, huggingface_hub
 from datasets import load_dataset
 from trl import DPOConfig, DPOTrainer
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, BitsAndBytesConfig
+from peft import LoraConfig, TaskType, get_peft_model
 
 hf_key = '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'
 huggingface_hub.login(hf_key)
@@ -9,6 +10,15 @@ huggingface_hub.login(hf_key)
 model_id = 'meta-llama/Llama-2-7b-hf'
 dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.cuda.empty_cache()
+
+
+lora_config = LoraConfig(
+    task_type=TaskType.CAUSAL_LM,
+    inference_mode= False,
+    r = 8,
+    lora_alpha=32,
+    lora_dropout=0.1
+)
 
 quant_config = BitsAndBytesConfig(load_in_4bit = True, bnb_4bit_compute_dtype = torch.bfloat16)
 generation_config = GenerationConfig.from_pretrained(model_id)
@@ -25,6 +35,7 @@ tokenizer.chat_template = """
 """
 
 model = AutoModelForCausalLM.from_pretrained(model_id, cache_dir = '/media/discoexterno/francisco/modelos', quantization_config = quant_config, generation_config = generation_config).to(dev)
+model.add_adapter(lora_config, adapter_name = 'lora_godpls')
 model.generation_config.pad_token_id = tokenizer.pad_token_id
 tokenizer.pad_token = tokenizer.eos_token
 
