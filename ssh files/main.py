@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 hf_key = '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'
 huggingface_hub.login(hf_key)
 
-model_id = 'meta-llama/Llama-2-7b'
+model_id = 'meta-llama/Llama-2-7b-hf'
 dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.cuda.empty_cache()
 
