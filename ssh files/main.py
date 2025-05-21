@@ -3,6 +3,9 @@ from datasets import load_dataset
 from trl import DPOConfig, DPOTrainer
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig
 
+hf_key = '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'
+huggingface_hub.login(hf_key)
+
 model_id = 'meta-llama/Llama-3.2-1B-Instruct'
 
 generation_config = GenerationConfig.from_pretrained(model_id)
