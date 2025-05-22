@@ -4,7 +4,7 @@ from trl import DPOConfig, DPOTrainer
 from transformers import AutoTokenizer, AutoModelForCausalLM, GenerationConfig, BitsAndBytesConfig
 from peft import LoraConfig, TaskType
 
-hf_key = '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'
+hf_key = 'pon tu propia llave'
 huggingface_hub.login(hf_key)
 
 model_id = 'meta-llama/Llama-3.1-8B-Instruct' # Se modifica en función del modelo que se quiera implementar
