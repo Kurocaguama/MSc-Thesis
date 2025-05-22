@@ -7,7 +7,7 @@ from peft import LoraConfig, TaskType
 hf_key = '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'
 huggingface_hub.login(hf_key)
 
-model_id = 'meta-llama/Llama-3.1-8B' # Se modifica en función del modelo que se quiera implementar
+model_id = 'meta-llama/Llama-3.1-8B-Instruct' # Se modifica en función del modelo que se quiera implementar
 dev = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 torch.cuda.empty_cache()
 
@@ -48,4 +48,4 @@ trainer = DPOTrainer(model = model, args = training_args, processing_class = tok
 trainer.train()
 
 #Los modelos resultantes están en huggingface para libre uso. 
-model.push_to_hub('Llama-3.1-8B-DPO-beamsearch-align') # El se modifica en función del DS y el modelo usado. 
+model.push_to_hub('Llama-3.1-8B-Instruct-DPO-beamsearch-align') # El se modifica en función del DS y el modelo usado. 
